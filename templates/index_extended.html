@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    BGO
+{% endblock %}
+
+{% block content %}
+    <h1>Board Games Online</h1>
+    Welcome to Board Games Online space cowboy. This will one day be a good website. Meanwhile check out 
+    <a href="https://coup.alwaysdata.net/">this amazing website</a>
+    to play Coup online.
+    <hr>
+    <h1>Posts list</h1>
+    <!-- `for` initiates a for loop over the python object however the loop 
+        has to be closed with `endfor`-->
+    {% for post in posts%}
+        <a href="#">
+            <h6>{{ post['title'] }}
+            <span class="badge badge-primary">{{ post['created'] }}</span>
+            </h6>
+        </a>
+        <hr>
+    {% endfor %}
+{% endblock %}
