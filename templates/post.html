@@ -1,0 +1,12 @@
+{% extends 'base.html'%}
+
+{% block title %}
+    BGO
+{% endblock %}
+
+{% block content %}
+    <h1>{{post['title']}}</h1>
+    <h5>Posted on {{post['created']}}</h5>
+    <hr>
+    {{post['content']}}
+{% endblock %}

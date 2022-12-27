@@ -14,7 +14,11 @@
     <!-- `for` initiates a for loop over the python object however the loop 
         has to be closed with `endfor`-->
     {% for post in posts%}
-        <a href="#">
+        <!-- This is magic:
+            `post` is the name of the view function (decorated with @app.route)
+            running this link to the page `post` with argument `post_id`
+        -->
+        <a href="{{ url_for('post', post_id=post['id'])}}">
             <h6>{{ post['title'] }}
             <span class="badge badge-primary">{{ post['created'] }}</span>
             </h6>
