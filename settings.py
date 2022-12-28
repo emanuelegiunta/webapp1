@@ -1,3 +1,5 @@
+
+
 class settings:
     def __init__(self, path, debug):
         ''' Settings initialization
@@ -6,11 +8,6 @@ class settings:
         '''
         self.path = path
         self.debug = debug
-
-    def formatted_path(self):
-        ''' Not very clean thing to let Jinja have a path without leading /
-        '''
-        return self.path[1:]
 
 # Sinlge object paradigm
 # `path` should end with a "/", eg: "/test/", "/mysite/app/"

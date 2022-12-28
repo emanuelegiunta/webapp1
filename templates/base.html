@@ -16,14 +16,12 @@
     <!-- Note: To make this compatible with local runs with root on '/' and
         server runs with root on '/test/' we pass settings to Jinja and use
         the join helper -->
-    <link rel="stylesheet" href="{{url_for(
-        [settings.formatted_path(), 'static']|join, 
-        filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{
+        [settings.path, 'static/css/style.css']|join }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ url_for( 
-        [settings.formatted_path(), 'static']|join,
-        filename='graphics/favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{
+        [settings.path, 'static/graphics/favicon.png']|join }}">
 
     <title>{% block title %} {% endblock %}</title>
   </head>
