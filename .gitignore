@@ -2,4 +2,4 @@
 *.db
 venv/*
 ssh_connect
-mysettings.py
+settings.py

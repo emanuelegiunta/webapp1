@@ -2,7 +2,7 @@ import sqlite3
 import os.path
 from flask import Flask, render_template
 from werkzeug.exceptions import abort
-from mysettings import settings
+from settings import settings
 
 def get_db_connection():
     '''Opens the database and return a `connection` object (entries of a table
