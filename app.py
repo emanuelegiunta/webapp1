@@ -35,7 +35,15 @@ def get_post(post_id):
     return post
 
 
+#==============================================================================
+# FLASK STUFF
+
 app = Flask(__name__)
+
+# Inject variables into Jinja Template Processor
+@app.context_processor
+def inject_settings():
+    return {'settings': settings}
 
 # by default settings.path = "/" so the line below is read as
 # `@app.route("/")`
@@ -48,8 +56,9 @@ def index():
     connection.close()
     return render_template('index_extended.html', posts=posts)
 
-
-@app.route(os.path.join(settings.path, "<post_id>"))
+# Create a family of sub-pages. Each pages is associated to an int `post_id`
+#  ie. `/test/1` `/test/2` if `settings.path` is "/test/"
+@app.route(os.path.join(settings.path, "<int:post_id>"))
 def post(post_id):
     post = get_post(post_id)
     return render_template('post.html', post=post)
