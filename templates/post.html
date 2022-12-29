@@ -9,4 +9,21 @@
     <h5>Posted on {{post['created']}}</h5>
     <hr>
     {{post['content']}}
+    <hr>
+    <h3> Actions: </h3>
+
+    <!-- Edit Button -->
+    <a href="{{ url_for('edit', post_id=post['id']) }}">
+        <button type="button" class="btn btn-primary">edit 
+        </button>
+    </a>
+
+    <!-- Delete Button -->
+    <!-- Note, you can create a <form> without any user-input -->
+    <form action="{{ url_for('delete', post_id=post['id']) }}" method="POST">
+    <input type="submit" value="Delete Post"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Are you sure you want to delete this post?')">
+    </form>
+
 {% endblock %}

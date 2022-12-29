@@ -10,7 +10,16 @@
     <a href="https://coup.alwaysdata.net/">this amazing website</a>
     to play Coup online.
     <hr>
-    <h1>Posts list</h1>
+    <h2>Create a New Post</h2>
+    I'm working on a button to send you to that page. Meanwhile you can just click on the link <a href="./create">new post</a><br>
+    EDIT: I've got a button now
+    <a href="{{ url_for('create') }}">
+        <button type="button" class="btn btn-primary">
+            New Post
+        </button>
+    </a>
+    <hr>
+    <h2>Posts list</h2>
     <!-- `for` initiates a for loop over the python object however the loop 
         has to be closed with `endfor`-->
     {% for post in posts%}

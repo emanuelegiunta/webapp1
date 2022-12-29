@@ -1,6 +1,6 @@
 import sqlite3
 import os.path
-from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
 from settings import settings
 
@@ -62,6 +62,65 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     return render_template('post.html', post=post)
+
+@app.route(os.path.join(settings.path, "create"), methods=('GET', 'POST'))
+def create():
+    if request.method == 'POST':
+
+        # In the following we dangerously assume everything goes well, but it
+        #  may also go wrong if the form is malformed
+        title = request.form['title']
+        content = request.form['content']
+
+        if not title:
+            # Not sure what flash does, but it seems like an `alert(<text>)`
+            flash("title is required!")
+
+        else:
+            # Add to database
+            connection = get_db_connection()
+            connection.execute("INSERT INTO posts (title, content) VALUES (?, ?)", (title, content))
+
+            connection.commit()
+            connection.close()
+            return redirect(url_for('index'))
+
+    # Se non siamo già tornati alla pagina iniziale, torniamo alla pagina
+    return render_template('create.html')
+
+@app.route(os.path.join(settings.path, "edit/<int:post_id>"),
+    methods=('GET', 'POST'))
+def edit(post_id):
+    # This was the nice function we wrote with sqlite3
+    post = get_post(post_id)
+
+    if request.method == 'POST':
+
+        # stuff form the form
+        title = request.form['title']
+        content = request.form['content']
+
+        # Modify stuff in the database
+        connection = get_db_connection()
+        connection.execute("UPDATE posts SET title = ?, content = ?, created = CURRENT_TIMESTAMP WHERE id = ?", (title, content, post_id))
+
+        connection.commit()
+        connection.close()
+        return redirect(url_for('index'))
+
+    return render_template('edit.html', original_post=post)
+
+@app.route(os.path.join(settings.path, "detele/<int:post_id>"),
+    methods=('POST',))
+def delete(post_id):
+
+    # At some point I should work on a confirmation mechanism
+    connection = get_db_connection()
+    connection.execute("DELETE FROM posts WHERE id = ?", (post_id,))
+    connection.commit()
+    connection.close()
+
+    return redirect(url_for('index'))
 
 if __name__ == "__main__" and settings.path:
     app.run(debug=True)
